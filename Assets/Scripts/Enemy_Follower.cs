@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy_Follower : MonoBehaviour
@@ -5,7 +6,7 @@ public class Enemy_Follower : MonoBehaviour
     public State idleState = State.Idle;
     public float viewRange = 40f;
     public float idleSpeed = 2f;
-    public float followSpeed = 6f;
+    public float followSpeed = 3f;
 
     public enum State
     {
@@ -76,15 +77,17 @@ public class Enemy_Follower : MonoBehaviour
     private bool CanSeePlayer()
     {
         if (player == null) return false;
-        float relAngle = Mathf.Atan2(player.transform.position.y - transform.position.y, player.transform.position.x - transform.position.x);
-        relAngle *= Mathf.Rad2Deg;
-        // solve wrapping issue when angle is going left
-        if (Mathf.Abs(AngleZ - relAngle) < viewRange) // check if this is looking at that dir
+        if (state == idleState) // when idling, check if this is looking at that dir
         {
-            // raytrace to player to see if this can see player
-            if (!Physics2D.Linecast(transform.position, player.transform.position, LayerMask.NameToLayer("Map")))
-                return true;
+            float relAngle = Mathf.Atan2(player.transform.position.y - transform.position.y, player.transform.position.x - transform.position.x);
+            relAngle *= Mathf.Rad2Deg;
+            // todo: solve wrapping issue when angle is going left
+            if (Mathf.Abs(AngleZ - relAngle) > viewRange)
+                return false;
         }
+        // raytrace to player to see if this can see player
+        if (!Physics2D.Linecast(transform.position, player.transform.position, LayerMask.NameToLayer("Map")))
+            return true;
         return false;
     }
 
@@ -125,6 +128,7 @@ public class Enemy_Follower : MonoBehaviour
         {
             return;
         }
+        if (state == State.Follow) return; // don't look away when following
         AngleZ += 180f;
         if (AngleZ > 180f) AngleZ -= 360f;
     }
