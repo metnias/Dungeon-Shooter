@@ -20,6 +20,6 @@ public class Portal_Handler : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.gameObject.CompareTag("Player")) return;
-        SceneManager.LoadScene(sceneName);
+        Room_Manager.ChangeScene(sceneName, doorNumber);
     }
 }
