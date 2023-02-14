@@ -5,7 +5,8 @@ using UnityEngine;
 public class Player_Inventory : MonoBehaviour
 {
     public static int numKey = 0;
-    public static int numArrow = 10;
+    public static int numArrow = 50;
+    public static int health = 3;
 
     private void Start()
     {
@@ -16,6 +17,7 @@ public class Player_Inventory : MonoBehaviour
     {
         numKey = 0;
         numArrow = 10;
+        health = 3;
     }
 
 
