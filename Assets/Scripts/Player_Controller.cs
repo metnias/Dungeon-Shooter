@@ -9,7 +9,7 @@ public class Player_Controller : MonoBehaviour
 
     private float axisH;
     private float axisV;
-    public float angleZ = -90f;
+    internal float angleZ = -90f;
 
     private Rigidbody2D rBody;
     private bool isMoving = false;

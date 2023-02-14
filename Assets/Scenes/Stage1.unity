@@ -12171,7 +12171,9 @@ GameObject:
   - component: {fileID: 1716899146}
   - component: {fileID: 1716899145}
   - component: {fileID: 1716899147}
-  m_Layer: 0
+  - component: {fileID: 1716899148}
+  - component: {fileID: 1716899149}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -12315,4 +12317,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  angleZ: -90
+--- !u!114 &1716899148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716899141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d162c6162945784487f5f012ed7a67e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootSpeed: 12
+  shotDelay: 0.25
+  bowPrefab: {fileID: 4265660565432941056, guid: f933cfb92975e64478b980b1471d51bb, type: 3}
+  arrowPrefab: {fileID: 6296192874227178779, guid: f45771dfa4c4bf1438b817ff1ae5a741, type: 3}
+--- !u!114 &1716899149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716899141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92f3fed2119193541991d0a2b05ff350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
