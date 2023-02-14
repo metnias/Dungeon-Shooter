@@ -4,15 +4,51 @@ using UnityEngine;
 
 public class Enemy_Animator : MonoBehaviour
 {
-    // Start is called before the first frame update
+    internal float angleZ = -90f;
+
+    private Animator anim;
+
+    public string aniUp;
+    public string aniDown;
+    public string aniLeft;
+    public string aniRight;
+    public string aniHurt;
+    public string aniDie;
+
+    private string curAni, lastAni;
+#nullable enable
+    private string? forcedAni = null;
+#nullable restore
+
     void Start()
     {
-        
+        anim = GetComponent<Animator>();
+        lastAni = aniDown;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        curAni = angleZ switch
+        {
+            float a when a > -45f && a < 45f => aniRight,
+            float a when a >= 45f && a <= 135f => aniUp,
+            float a when a <= -45f && a >= -135f => aniDown,
+            _ => aniLeft,
+        };
+        curAni = forcedAni ?? curAni;
+
+        if (lastAni != curAni)
+        {
+            lastAni = curAni;
+            anim.Play(curAni);
+        }
     }
+
+    internal void HurtAnimation(bool die = false)
+    {
+        forcedAni = die ? aniDie : aniHurt;
+        if (!die) Invoke(nameof(StopHurtAnimation), 1f);
+    }
+
+    private void StopHurtAnimation() => forcedAni = null;
 }

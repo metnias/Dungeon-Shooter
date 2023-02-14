@@ -13,10 +13,10 @@ public class Player_Inventory : MonoBehaviour
         
     }
 
-    public static void Reset()
+    public static void Reset() // todo: reset this on title scren
     {
         numKey = 0;
-        numArrow = 10;
+        numArrow = 50;
         health = 3;
     }
 
