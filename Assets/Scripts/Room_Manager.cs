@@ -9,6 +9,12 @@ public class Room_Manager : MonoBehaviour
 
     void Start()
     {
+        MovePlayer();
+    }
+
+    private static void MovePlayer()
+    {
+        // Move Player to linked portal from the last scene
         var exits = GameObject.FindGameObjectsWithTag("Exit");
         for (int i = 0; i < exits.Length; i++)
         {
@@ -35,9 +41,12 @@ public class Room_Manager : MonoBehaviour
         }
     }
 
-    internal static void ChangeScene(string sceneName, int doorNumber)
+    internal static void ChangeScene(string sceneName, int nextdoorNumber)
     {
-        Room_Manager.doorNumber = doorNumber;
-        SceneManager.LoadScene(sceneName);
+        doorNumber = nextdoorNumber;
+        if (string.IsNullOrEmpty(sceneName) || sceneName == SceneManager.GetActiveScene().name)
+            MovePlayer(); // Shortcut within scene
+        else 
+            SceneManager.LoadScene(sceneName); // change scene
     }
 }
