@@ -15,17 +15,22 @@ public class Room_Manager : MonoBehaviour
             Portal_Handler pHandler = exits[i].GetComponent<Portal_Handler>();
             if (doorNumber != pHandler.doorNumber) continue;
             Vector2 pos = exits[i].transform.position;
+            float angleZ;
             switch (pHandler.direction)
             {
-                case ExitDirection.Up: pos.y += 1f; break;
+                case ExitDirection.Up: pos.y += 1f; angleZ = 90f; break;
                 default:
-                case ExitDirection.Down: pos.y -= 1f; break;
-                case ExitDirection.Left: pos.x -= 1f; break;
-                case ExitDirection.Right: pos.x += 1f; break;
+                case ExitDirection.Down: pos.y -= 1f; angleZ = -90f; break;
+                case ExitDirection.Left: pos.x -= 1f; angleZ = 190f; break;
+                case ExitDirection.Right: pos.x += 1f; angleZ = 0f; break;
             }
 
             var player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null) player.transform.position = pos;
+            if (player != null)
+            {
+                player.transform.position = pos;
+                player.GetComponent<Player_Controller>().angleZ = angleZ;
+            }
             break;
         }
     }

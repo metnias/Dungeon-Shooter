@@ -12,13 +12,14 @@ public class Player_Bow : MonoBehaviour
     private GameObject bow;
     private Player_Controller ctrler;
 
-    private bool shooting = false;
+    private bool shooting = true;
 
     private void Start()
     {
         var pos = transform.position;
         bow = Instantiate(bowPrefab, pos, Quaternion.identity, transform);
         ctrler = GetComponent<Player_Controller>();
+        Invoke(nameof(ShootEnd), 1f); // initial shoot cooltime
     }
 
     private void Update()
