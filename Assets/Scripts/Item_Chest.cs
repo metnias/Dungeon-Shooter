@@ -18,6 +18,7 @@ public class Item_Chest : MonoBehaviour
         if (itemsPrefab[i] != null)
         {
             var item = Instantiate(itemsPrefab[i], transform.position, Quaternion.identity);
+            GetComponent<BoxCollider2D>().enabled = false;
         }
         else
         {

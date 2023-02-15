@@ -47,8 +47,7 @@ public class Enemy_Animator : MonoBehaviour
     internal void HurtAnimation(bool die = false)
     {
         forcedAni = die ? aniDie : aniHurt;
-        if (!die) Invoke(nameof(StopHurtAnimation), 0.5f);
     }
 
-    private void StopHurtAnimation() => forcedAni = null;
+    internal void StopHurtAnimation() => forcedAni = null;
 }

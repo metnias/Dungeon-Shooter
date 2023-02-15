@@ -108,7 +108,7 @@ public class Enemy_Follower : MonoBehaviour
 
     private void ChangeState(State newState)
     {
-        // if (state == newState) return;
+        if (state == State.Hurt) anim.StopHurtAnimation();
         // Debug.Log($"{gameObject.name} goes {state} -> {newState}");
         switch (newState)
         {

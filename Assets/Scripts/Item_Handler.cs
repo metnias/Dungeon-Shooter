@@ -20,7 +20,9 @@ public class Item_Handler : MonoBehaviour
         switch (type)
         {
             case ItemType.Key: Player_Inventory.numKey += amount; break;
-            case ItemType.Arrow: Player_Inventory.numArrow += amount; break;
+            case ItemType.Arrow:
+                Player_Inventory.numArrow = Mathf.Min(999, Player_Inventory.numArrow + amount); // clamp at 999
+                break;
             case ItemType.Heart:
                 if (Player_Inventory.health == Player_Inventory.maxHealth) return; // reject
                 Player_Inventory.health += amount;
