@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player_Bow : MonoBehaviour
 {
     public float shootSpeed = 12f;
-    public float shotDelay = 0.25f;
+    public float shotDelay = 0.5f;
     public GameObject bowPrefab;
     public GameObject arrowPrefab;
 

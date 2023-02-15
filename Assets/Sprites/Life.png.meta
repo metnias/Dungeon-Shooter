@@ -120,10 +120,10 @@ TextureImporter:
       name: Life_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 358.5
-        width: 106
-        height: 119.5
+        x: 0
+        y: 367
+        width: 320
+        height: 110
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,10 +141,10 @@ TextureImporter:
       name: Life_1
       rect:
         serializedVersion: 2
-        x: 108
-        y: 358.5
-        width: 106
-        height: 119.5
+        x: 0
+        y: 245
+        width: 320
+        height: 110
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -162,10 +162,10 @@ TextureImporter:
       name: Life_2
       rect:
         serializedVersion: 2
-        x: 214
-        y: 358.5
-        width: 106
-        height: 119.5
+        x: 0
+        y: 123
+        width: 320
+        height: 110
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -183,10 +183,10 @@ TextureImporter:
       name: Life_3
       rect:
         serializedVersion: 2
-        x: 2
-        y: 239.5
-        width: 106
-        height: 119.5
+        x: 0
+        y: 1
+        width: 320
+        height: 110
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -196,174 +196,6 @@ TextureImporter:
       bones: []
       spriteID: bc5104d7db0774e42aa67cc7e7c85340
       internalID: -2069320138
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Life_4
-      rect:
-        serializedVersion: 2
-        x: 108
-        y: 239.5
-        width: 106
-        height: 119.5
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2368ca0c1a517254a8075c1a129c3135
-      internalID: -1644959680
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Life_5
-      rect:
-        serializedVersion: 2
-        x: 214
-        y: 239.5
-        width: 106
-        height: 119.5
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: be48cb756fdfb2d42a40a0500e13a713
-      internalID: 142119387
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Life_6
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 120.5
-        width: 106
-        height: 119.5
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9a95ac80551f71d4dace28ffb3023fe3
-      internalID: 779400370
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Life_7
-      rect:
-        serializedVersion: 2
-        x: 108
-        y: 120.5
-        width: 106
-        height: 119.5
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6872f28bf2d306c4c8486c47c5bace0f
-      internalID: -358500815
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Life_8
-      rect:
-        serializedVersion: 2
-        x: 214
-        y: 120.5
-        width: 106
-        height: 119.5
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0a0d7346600d8b744a022071f89ebba2
-      internalID: -957532851
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Life_9
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 1.5
-        width: 106
-        height: 119.5
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 488fe79cb3fcc2c4584e777202a9906b
-      internalID: -399003986
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Life_10
-      rect:
-        serializedVersion: 2
-        x: 108
-        y: 1.5
-        width: 106
-        height: 119.5
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4878e212cd1a76e449ff803ca2c989ea
-      internalID: 1550268678
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Life_11
-      rect:
-        serializedVersion: 2
-        x: 214
-        y: 1.5
-        width: 106
-        height: 119.5
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 11edb343930664e4e843efda1f658f08
-      internalID: 1991182115
       vertices: []
       indices: 
       edges: []
@@ -380,16 +212,8 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Life_1: -894643851
-      Life_5: 142119387
-      Life_6: 779400370
-      Life_7: -358500815
       Life_3: -2069320138
-      Life_9: -399003986
-      Life_8: -957532851
-      Life_4: -1644959680
-      Life_11: 1991182115
       Life_2: -2135605636
-      Life_10: 1550268678
       Life_0: -2019114539
   spritePackingTag: 
   pSDRemoveMatte: 0

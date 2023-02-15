@@ -23,15 +23,19 @@ public class Player_Controller : MonoBehaviour
 
     private string curAnimation, lastAnimation;
     private Animator animator;
+    private SpriteRenderer spr;
     private float hurtAnim = 0f;
-
+    private bool invincible = false;
 
     private void Start()
     {
         rBody = GetComponent<Rigidbody2D>();
         rBody.constraints = RigidbodyConstraints2D.FreezeRotation;
         animator = GetComponent<Animator>();
-        curAnimation = ANI_UP;
+        spr = GetComponent<SpriteRenderer>();
+        curAnimation = ANI_DOWN;
+        invincible = true;
+        Invoke(nameof(DisableInvincibility), 2f);
     }
 
     private void Update()
@@ -48,6 +52,7 @@ public class Player_Controller : MonoBehaviour
             float a when a <= -45f && a >= -135f => ANI_DOWN,
             _ => ANI_LEFT,
         };
+        spr.enabled = true;
         if (Player_Inventory.health < 1) //dead
         {
             curAnimation = ANI_DIE;
@@ -58,6 +63,8 @@ public class Player_Controller : MonoBehaviour
             if (hurtAnim < 0f) hurtAnim = 0f;
             curAnimation = ANI_HURT;
         }
+        else if (invincible) // iframe flicker
+            spr.enabled = Mathf.Sin(Time.timeSinceLevelLoad * 50f) > 0f;
 
         if (lastAnimation != curAnimation)
         {
@@ -74,16 +81,29 @@ public class Player_Controller : MonoBehaviour
         rBody.velocity = speed * dir;
     }
 
-    public void Damage(int amount)
+    public void Damage(GameObject hazard)
     {
-        if (hurtAnim > 0f) return; // invulnability time
-        Player_Inventory.health -= amount;
+        if (invincible) return; // invulnability time
+        invincible = true;
+        Invoke(nameof(DisableInvincibility), 2f);
+        var push = transform.position - hazard.transform.position;
+        push = push.normalized * 300f;
+        GetComponent<Rigidbody2D>().AddForce(push, ForceMode2D.Impulse);
+        Player_Inventory.health--;
         if (Player_Inventory.health < 1)
         {
-            Player_Inventory.health = 0;
-            return;
+            Die(); return;
         }
         hurtAnim = 1f;
     }
+
+    public void Die()
+    {
+        Player_Inventory.health = 0;
+        GetComponent<CircleCollider2D>().enabled = false;
+        
+    }
+
+    private void DisableInvincibility() => invincible = false;
 
 }

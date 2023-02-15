@@ -108,7 +108,7 @@ public class Enemy_Follower : MonoBehaviour
 
     private void ChangeState(State newState)
     {
-        if (state == newState) return;
+        // if (state == newState) return;
         // Debug.Log($"{gameObject.name} goes {state} -> {newState}");
         switch (newState)
         {
@@ -166,17 +166,12 @@ public class Enemy_Follower : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (state != State.Follow) return; // not attacking
-            var player = collision.gameObject;
-            player.GetComponent<Player_Controller>().Damage(1);
-            var push = player.transform.position - transform.position;
-            push = push.normalized;
-            push *= followSpeed * 100f;
-            player.GetComponent<Rigidbody2D>().AddForce(push, ForceMode2D.Impulse);
+            if (state == State.Hurt || state == State.Die) return; // not attacking
+            collision.gameObject.GetComponent<Player_Controller>().Damage(gameObject);
             return;
         }
         if (state == State.Follow) return; // don't look away when following
-        AngleZ += 180f;
+        AngleZ += 180f; // turn around when hitting wall while idle
         if (AngleZ > 180f) AngleZ -= 360f;
     }
 

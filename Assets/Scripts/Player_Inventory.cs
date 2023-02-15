@@ -9,7 +9,7 @@ public class Player_Inventory : MonoBehaviour
     public static int health = 3;
     public static int maxHealth = 3;
 
-    public static void Reset() // todo: reset this on title scren
+    public static void Reset() // todo: call this on title scren
     {
         numKey = 0;
         numArrow = 30;

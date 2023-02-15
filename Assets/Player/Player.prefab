@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootSpeed: 12
-  shotDelay: 0.25
+  shotDelay: 0.5
   bowPrefab: {fileID: 4265660565432941056, guid: f933cfb92975e64478b980b1471d51bb, type: 3}
   arrowPrefab: {fileID: 6296192874227178779, guid: f45771dfa4c4bf1438b817ff1ae5a741, type: 3}
 --- !u!114 &8331008094894665228
