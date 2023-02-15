@@ -41,10 +41,8 @@ public class Player_Controller : MonoBehaviour
 
     private void Update()
     {
-        axisH = Input.GetAxisRaw("Horizontal");
-        axisV = Input.GetAxisRaw("Vertical");
-        isMoving = axisH != 0f || axisV != 0f;
-        if (isMoving) angleZ = Mathf.Atan2(axisV, axisH) * Mathf.Rad2Deg;
+        if (!Input.GetMouseButton(0))
+            SetAxis(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         curAnimation = angleZ switch
         {
@@ -81,6 +79,13 @@ public class Player_Controller : MonoBehaviour
         var dir = new Vector2(axisH, axisV);
         dir = Vector2.ClampMagnitude(dir, 1f); // clamp diagonal speed
         rBody.velocity = speed * dir;
+    }
+
+    internal void SetAxis(float x, float y)
+    {
+        axisH = x; axisV = y;
+        isMoving = axisH != 0f || axisV != 0f;
+        if (isMoving) angleZ = Mathf.Atan2(axisV, axisH) * Mathf.Rad2Deg;
     }
 
     public void Damage(GameObject hazard)
