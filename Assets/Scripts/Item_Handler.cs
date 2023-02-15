@@ -21,8 +21,16 @@ public class Item_Handler : MonoBehaviour
         {
             case ItemType.Key: Player_Inventory.numKey += amount; break;
             case ItemType.Arrow: Player_Inventory.numArrow += amount; break;
-            case ItemType.Heart: Player_Inventory.health += amount; break; // todo: reject if player health is max
+            case ItemType.Heart:
+                if (Player_Inventory.health == Player_Inventory.maxHealth) return; // reject
+                Player_Inventory.health += amount;
+                break;
         }
-        gameObject.SetActive(false);
+
+        gameObject.GetComponent<CircleCollider2D>().enabled = false;
+        Rigidbody2D rBody = gameObject.GetComponent<Rigidbody2D>();
+        rBody.gravityScale = -3f;
+        rBody.AddForce(Vector2.down * 7f, ForceMode2D.Impulse);
+        Destroy(gameObject, 2f);
     }
 }

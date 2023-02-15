@@ -68,8 +68,7 @@ public class Player_Controller : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Player_Inventory.health < 1) { rBody.velocity = Vector2.zero; return; }// dead
-        if (hurtAnim > 0f) { rBody.velocity *= 0.9f; return; }
+        if (Player_Inventory.health < 1 || hurtAnim > 0f) { rBody.velocity *= 0.9f; return; }
         var dir = new Vector2(axisH, axisV);
         dir = Vector2.ClampMagnitude(dir, 1f); // clamp diagonal speed
         rBody.velocity = speed * dir;
