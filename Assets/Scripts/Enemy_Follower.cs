@@ -12,7 +12,8 @@ public class Enemy_Follower : MonoBehaviour
     public enum State
     {
         Idle,
-        // Wander,
+        TurnCW,
+        TurnCCW,
         PatrolVert,
         PatrolHorz,
 
@@ -53,6 +54,18 @@ public class Enemy_Follower : MonoBehaviour
                 if (CanSeePlayer()) ChangeState(State.Follow);
                 return;
 
+            case State.TurnCCW:
+            case State.TurnCW:
+                actTimer -= Time.deltaTime;
+                if (actTimer <= 0f)
+                {
+                    actTimer = 3f;
+                    AngleZ += state == State.TurnCCW ? 90f : -90f;
+                    if (AngleZ > 180f) AngleZ -= 360f;
+                }
+                else if (CanSeePlayer()) ChangeState(State.Follow);
+                return;
+
             case State.Follow:
                 if (!CanSeePlayer()) ChangeState(State.Lost);
                 else AngleZ = Mathf.Atan2(player.transform.position.y - transform.position.y, player.transform.position.x - transform.position.x) * Mathf.Rad2Deg;
@@ -80,7 +93,7 @@ public class Enemy_Follower : MonoBehaviour
     private bool CanSeePlayer()
     {
         if (player == null) return false;
-        if (Vector2.Distance(player.transform.position, transform.position) > detectRadius) return false; // outside radius
+        if (state != State.Follow && Vector2.Distance(player.transform.position, transform.position) > detectRadius) return false; // outside radius
         float relAngle = Mathf.Atan2(player.transform.position.y - transform.position.y, player.transform.position.x - transform.position.x);
         relAngle *= Mathf.Rad2Deg;
         relAngle = AngleZ - relAngle;
@@ -99,13 +112,14 @@ public class Enemy_Follower : MonoBehaviour
         // Debug.Log($"{gameObject.name} goes {state} -> {newState}");
         switch (newState)
         {
+            case State.TurnCCW:
+            case State.TurnCW: actTimer = 3f; AngleZ = 90f * Random.Range(0, 4) - 180f; break;
             case State.Idle: AngleZ = 90f * Random.Range(0, 4) - 180f; break;
             case State.PatrolVert: AngleZ = -90f; break;
             case State.PatrolHorz: AngleZ = 0f; break;
             case State.Lost: actTimer = 2f; break;
             case State.Hurt: actTimer = 0.5f; anim.HurtAnimation(); break;
             case State.Die:
-                rBody.simulated = false;
                 GetComponent<CircleCollider2D>().enabled = false;
                 Destroy(gameObject, 1f);
                 anim.HurtAnimation(true);
@@ -128,6 +142,10 @@ public class Enemy_Follower : MonoBehaviour
                 rBody.velocity = v * followSpeed;
                 break;
 
+            case State.Hurt:
+            case State.Die:
+                rBody.velocity *= 0.9f; break;
+
             default:
                 rBody.velocity = Vector2.zero; break;
         }
@@ -139,7 +157,7 @@ public class Enemy_Follower : MonoBehaviour
         {
             if (state == State.Die) return;
             var push = collision.gameObject.GetComponent<Rigidbody2D>().velocity;
-            rBody.AddForce(push * 50f, ForceMode2D.Impulse);
+            rBody.AddForce(push, ForceMode2D.Impulse);
             AngleZ = Mathf.Atan2(-push.y, -push.x) * Mathf.Rad2Deg; // look where the arrow came from
             health--;
             if (health < 1) { health = 0; ChangeState(State.Die); }
