@@ -124,7 +124,7 @@ MonoBehaviour:
   idleState: 0
   viewRange: 30
   idleSpeed: 2
-  followSpeed: 4
+  followSpeed: 3
 --- !u!114 &1131265016647694054
 MonoBehaviour:
   m_ObjectHideFlags: 0

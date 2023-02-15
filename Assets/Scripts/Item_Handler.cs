@@ -21,7 +21,7 @@ public class Item_Handler : MonoBehaviour
         {
             case ItemType.Key: Player_Inventory.numKey += amount; break;
             case ItemType.Arrow: Player_Inventory.numArrow += amount; break;
-            case ItemType.Heart: Player_Inventory.health += amount; break; // todo: clamp this
+            case ItemType.Heart: Player_Inventory.health += amount; break; // todo: reject if player health is max
         }
         gameObject.SetActive(false);
     }

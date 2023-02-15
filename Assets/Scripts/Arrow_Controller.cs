@@ -18,5 +18,6 @@ public class Arrow_Controller : MonoBehaviour
         GetComponent<CircleCollider2D>().enabled = false;
         GetComponent<Rigidbody2D>().simulated = false;
 
+        
     }
 }

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy_Follower : MonoBehaviour
@@ -6,7 +5,9 @@ public class Enemy_Follower : MonoBehaviour
     public State idleState = State.Idle;
     public float viewRange = 40f;
     public float idleSpeed = 2f;
+    public float detectRadius = 20f;
     public float followSpeed = 3f;
+    public int health = 3;
 
     public enum State
     {
@@ -60,45 +61,55 @@ public class Enemy_Follower : MonoBehaviour
                 if (CanSeePlayer()) ChangeState(State.Follow);
                 else
                 {
-                    lostTimer -= Time.deltaTime;
-                    if (lostTimer <= 0f) ChangeState(idleState);
+                    actTimer -= Time.deltaTime;
+                    if (actTimer <= 0f) ChangeState(idleState);
                 }
                 break;
-                
+
             case State.Hurt:
-            case State.Die:
-                return;
+                actTimer -= Time.deltaTime;
+                if (actTimer <= 0f) ChangeState(State.Follow);
+                break;
+            case State.Die: return;
         }
     }
 
-    private float lostTimer;
+    private float actTimer;
 
 
     private bool CanSeePlayer()
     {
         if (player == null) return false;
-        if (state == idleState) // when idling, check if this is looking at that dir
-        {
-            float relAngle = Mathf.Atan2(player.transform.position.y - transform.position.y, player.transform.position.x - transform.position.x);
-            relAngle *= Mathf.Rad2Deg;
-            // todo: solve wrapping issue when angle is going left
-            if (Mathf.Abs(AngleZ - relAngle) > viewRange)
-                return false;
-        }
+        if (Vector2.Distance(player.transform.position, transform.position) > detectRadius) return false; // outside radius
+        float relAngle = Mathf.Atan2(player.transform.position.y - transform.position.y, player.transform.position.x - transform.position.x);
+        relAngle *= Mathf.Rad2Deg;
+        relAngle = AngleZ - relAngle;
+        if (relAngle > 180f) relAngle -= 360f;
+        else if (relAngle < -180f) relAngle += 360f; // wrap angle
+        if (Mathf.Abs(relAngle) > viewRange) return false; // check if it's looking at player direction
         // raytrace to player to see if this can see player
-        if (!Physics2D.Linecast(transform.position, player.transform.position, LayerMask.NameToLayer("Map")))
+        if (!Physics2D.Linecast(transform.position, player.transform.position, 1 << LayerMask.NameToLayer("Map")))
             return true;
         return false;
     }
 
     private void ChangeState(State newState)
     {
+        if (state == newState) return;
+        // Debug.Log($"{gameObject.name} goes {state} -> {newState}");
         switch (newState)
         {
             case State.Idle: AngleZ = 90f * Random.Range(0, 4) - 180f; break;
             case State.PatrolVert: AngleZ = -90f; break;
             case State.PatrolHorz: AngleZ = 0f; break;
-            case State.Lost: lostTimer = 2f; break;
+            case State.Lost: actTimer = 2f; break;
+            case State.Hurt: actTimer = 0.5f; anim.HurtAnimation(); break;
+            case State.Die:
+                rBody.simulated = false;
+                GetComponent<CircleCollider2D>().enabled = false;
+                Destroy(gameObject, 1f);
+                anim.HurtAnimation(true);
+                break;
         }
 
         state = newState;
@@ -124,8 +135,26 @@ public class Enemy_Follower : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Arrow"))
+        {
+            if (state == State.Die) return;
+            var push = collision.gameObject.GetComponent<Rigidbody2D>().velocity;
+            rBody.AddForce(push * 50f, ForceMode2D.Impulse);
+            AngleZ = Mathf.Atan2(-push.y, -push.x) * Mathf.Rad2Deg; // look where the arrow came from
+            health--;
+            if (health < 1) { health = 0; ChangeState(State.Die); }
+            else ChangeState(State.Hurt);
+            return;
+        }
         if (collision.gameObject.CompareTag("Player"))
         {
+            if (state != State.Follow) return; // not attacking
+            var player = collision.gameObject;
+            player.GetComponent<Player_Controller>().Damage(1);
+            var push = player.transform.position - transform.position;
+            push = push.normalized;
+            push *= followSpeed * 100f;
+            player.GetComponent<Rigidbody2D>().AddForce(push, ForceMode2D.Impulse);
             return;
         }
         if (state == State.Follow) return; // don't look away when following

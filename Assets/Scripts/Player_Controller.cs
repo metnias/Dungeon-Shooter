@@ -48,8 +48,11 @@ public class Player_Controller : MonoBehaviour
             float a when a <= -45f && a >= -135f => ANI_DOWN,
             _ => ANI_LEFT,
         };
-        // if die: show die
-        if (hurtAnim > 0f)
+        if (Player_Inventory.health < 1) //dead
+        {
+            curAnimation = ANI_DIE;
+        }
+        else if (hurtAnim > 0f) // hurt
         {
             hurtAnim -= Time.deltaTime;
             if (hurtAnim < 0f) hurtAnim = 0f;
@@ -65,8 +68,23 @@ public class Player_Controller : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Player_Inventory.health < 1) { rBody.velocity = Vector2.zero; return; }// dead
+        if (hurtAnim > 0f) { rBody.velocity *= 0.9f; return; }
         var dir = new Vector2(axisH, axisV);
         dir = Vector2.ClampMagnitude(dir, 1f); // clamp diagonal speed
         rBody.velocity = speed * dir;
     }
+
+    public void Damage(int amount)
+    {
+        if (hurtAnim > 0f) return; // invulnability time
+        Player_Inventory.health -= amount;
+        if (Player_Inventory.health < 1)
+        {
+            Player_Inventory.health = 0;
+            return;
+        }
+        hurtAnim = 1f;
+    }
+
 }
