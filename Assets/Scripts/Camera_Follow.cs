@@ -18,6 +18,7 @@ public class Camera_Follow : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             if (player == null) return;
         }
+        if (!player.GetComponent<Player_Controller>().Alive) return;
 
         transform.position = new Vector3(player.transform.position.x,
             player.transform.position.y,

@@ -26,6 +26,7 @@ public class Player_Controller : MonoBehaviour
     private SpriteRenderer spr;
     private float hurtAnim = 0f;
     private bool invincible = false;
+    public bool Alive => Player_Inventory.health > 0;
 
     private void Start()
     {
@@ -53,7 +54,7 @@ public class Player_Controller : MonoBehaviour
             _ => ANI_LEFT,
         };
         spr.enabled = true;
-        if (Player_Inventory.health < 1) //dead
+        if (!Alive) //dead
         {
             curAnimation = ANI_DIE;
         }
@@ -75,7 +76,8 @@ public class Player_Controller : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Player_Inventory.health < 1 || hurtAnim > 0f) { rBody.velocity *= 0.9f; return; }
+        if (!Alive) return;
+        if (hurtAnim > 0f) { rBody.velocity *= 0.9f; return; }
         var dir = new Vector2(axisH, axisV);
         dir = Vector2.ClampMagnitude(dir, 1f); // clamp diagonal speed
         rBody.velocity = speed * dir;
@@ -86,14 +88,12 @@ public class Player_Controller : MonoBehaviour
         if (invincible) return; // invulnability time
         invincible = true;
         Invoke(nameof(DisableInvincibility), 2f);
+        Player_Inventory.health--;
+        if (Player_Inventory.health < 1) { Die(); return; }
+
         var push = transform.position - hazard.transform.position;
         push = push.normalized * 300f;
         GetComponent<Rigidbody2D>().AddForce(push, ForceMode2D.Impulse);
-        Player_Inventory.health--;
-        if (Player_Inventory.health < 1)
-        {
-            Die(); return;
-        }
         hurtAnim = 1f;
     }
 
@@ -101,7 +101,9 @@ public class Player_Controller : MonoBehaviour
     {
         Player_Inventory.health = 0;
         GetComponent<CircleCollider2D>().enabled = false;
-        
+        rBody.velocity = Vector2.zero;
+        rBody.AddForce(Vector2.up * 100f, ForceMode2D.Impulse);
+        rBody.gravityScale = 2.5f;
     }
 
     private void DisableInvincibility() => invincible = false;
