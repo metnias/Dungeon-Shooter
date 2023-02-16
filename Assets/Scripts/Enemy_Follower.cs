@@ -118,7 +118,8 @@ public class Enemy_Follower : MonoBehaviour
             case State.PatrolVert: AngleZ = -90f; break;
             case State.PatrolHorz: AngleZ = 0f; break;
             case State.Lost: actTimer = 2f; break;
-            case State.Hurt: actTimer = 0.5f; anim.HurtAnimation(); break;
+            case State.Hurt:
+                actTimer = 0.5f; anim.HurtAnimation(); break;
             case State.Die:
                 GetComponent<CircleCollider2D>().enabled = false;
                 Destroy(gameObject, 1f);

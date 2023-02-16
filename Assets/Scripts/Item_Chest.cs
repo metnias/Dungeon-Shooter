@@ -7,6 +7,7 @@ public class Item_Chest : MonoBehaviour
     public Sprite sprOpen;
     public Sprite sprClose;
     public GameObject[] itemsPrefab;
+    [HideInInspector]
     public bool isClosed = true;
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -26,12 +27,14 @@ public class Item_Chest : MonoBehaviour
         }
         isClosed = false;
         GetComponent<SpriteRenderer>().sprite = sprOpen;
+        Sound_Manager.Instance().PlaySE(SEType.DoorOpen);
     }
 
     private void Close()
     {
         isClosed = true;
         GetComponent<SpriteRenderer>().sprite = sprClose;
+        Sound_Manager.Instance().PlaySE(SEType.DoorClose);
     }
 
 }

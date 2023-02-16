@@ -96,6 +96,7 @@ public class Player_Controller : MonoBehaviour
         Player_Inventory.Health--;
         if (Player_Inventory.Health < 1) { Die(); return; }
 
+        Sound_Manager.Instance().PlaySE(SEType.Damage);
         var push = transform.position - hazard.transform.position;
         push = push.normalized * 300f;
         GetComponent<Rigidbody2D>().AddForce(push, ForceMode2D.Impulse);
@@ -105,6 +106,7 @@ public class Player_Controller : MonoBehaviour
     public void Die()
     {
         Player_Inventory.Health = 0;
+        Sound_Manager.Instance().PlaySE(SEType.Killed);
         GetComponent<CircleCollider2D>().enabled = false;
         rBody.velocity = Vector2.zero;
         rBody.AddForce(Vector2.up * 100f, ForceMode2D.Impulse);

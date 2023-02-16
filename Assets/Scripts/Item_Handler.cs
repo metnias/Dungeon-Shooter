@@ -28,7 +28,7 @@ public class Item_Handler : MonoBehaviour
                 Player_Inventory.Health += amount;
                 break;
         }
-
+        Sound_Manager.Instance().PlaySE(SEType.PickUp);
         gameObject.GetComponent<CircleCollider2D>().enabled = false;
         Rigidbody2D rBody = gameObject.GetComponent<Rigidbody2D>();
         rBody.gravityScale = -3f;

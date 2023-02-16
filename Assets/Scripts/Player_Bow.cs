@@ -37,6 +37,7 @@ public class Player_Bow : MonoBehaviour
         if (Player_Inventory.NumArrow < 1 || shooting) return;
         Player_Inventory.NumArrow--; // use arrow
         shooting = true; // set cooldown
+        Sound_Manager.Instance().PlaySE(SEType.Shoot);
 
         var arrow = Instantiate(arrowPrefab, transform.position, Quaternion.Euler(0f, 0f, ctrler.angleZ)); // create arrow
         Vector2 vel = new(Mathf.Cos(ctrler.angleZ * Mathf.Deg2Rad), Mathf.Sin(ctrler.angleZ * Mathf.Deg2Rad)); // set direction

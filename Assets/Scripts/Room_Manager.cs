@@ -1,15 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Room_Manager : MonoBehaviour
 {
+    [Serializable]
+    public class RoomData
+    {
+        public int roomID = 0;
+        public string roomTag = string.Empty;
+    }
+
+    public RoomData roomData;
+    public BGMType bgm = BGMType.None;
+
     public static int doorNumber = 0;
+
 
     void Start()
     {
         MovePlayer();
+        Sound_Manager.Instance().PlayBGM(bgm);
     }
 
     private static void MovePlayer()
@@ -48,5 +61,10 @@ public class Room_Manager : MonoBehaviour
             MovePlayer(); // Shortcut within scene
         else 
             SceneManager.LoadScene(sceneName); // change scene
+    }
+
+    private void OnDestroy()
+    {
+        string json = JsonUtility.ToJson(roomData);
     }
 }
