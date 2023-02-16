@@ -16,7 +16,7 @@ public class UI_Counter : MonoBehaviour
 
     void Update()
     {
-        int n = isKey ? Player_Inventory.numKey : Player_Inventory.numArrow;
+        int n = isKey ? Player_Inventory.NumKey : Player_Inventory.NumArrow;
         text.text = n.ToString();
     }
 }

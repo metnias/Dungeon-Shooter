@@ -34,8 +34,8 @@ public class Player_Bow : MonoBehaviour
 
     public void Shoot()
     {
-        if (Player_Inventory.numArrow < 1 || shooting) return;
-        Player_Inventory.numArrow--; // use arrow
+        if (Player_Inventory.NumArrow < 1 || shooting) return;
+        Player_Inventory.NumArrow--; // use arrow
         shooting = true; // set cooldown
 
         var arrow = Instantiate(arrowPrefab, transform.position, Quaternion.Euler(0f, 0f, ctrler.angleZ)); // create arrow

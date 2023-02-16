@@ -16,7 +16,7 @@ public class UI_Hearts : MonoBehaviour
 
     void Update()
     {
-        int i = Mathf.Clamp(Player_Inventory.health, 0, sprHearts.Length);
+        int i = Mathf.Clamp(Player_Inventory.Health, 0, sprHearts.Length);
         image.sprite = sprHearts[i];
     }
 }

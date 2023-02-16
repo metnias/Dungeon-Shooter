@@ -19,13 +19,13 @@ public class Item_Handler : MonoBehaviour
         if (!collision.gameObject.CompareTag("Player")) return;
         switch (type)
         {
-            case ItemType.Key: Player_Inventory.numKey += amount; break;
+            case ItemType.Key: Player_Inventory.NumKey += amount; break;
             case ItemType.Arrow:
-                Player_Inventory.numArrow = Mathf.Min(999, Player_Inventory.numArrow + amount); // clamp at 999
+                Player_Inventory.NumArrow = Mathf.Min(999, Player_Inventory.NumArrow + amount); // clamp at 999
                 break;
             case ItemType.Heart:
-                if (Player_Inventory.health == Player_Inventory.maxHealth) return; // reject
-                Player_Inventory.health += amount;
+                if (Player_Inventory.Health == Player_Inventory.maxHealth) return; // reject
+                Player_Inventory.Health += amount;
                 break;
         }
 

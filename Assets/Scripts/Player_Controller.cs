@@ -26,7 +26,7 @@ public class Player_Controller : MonoBehaviour
     private SpriteRenderer spr;
     private float hurtAnim = 0f;
     private bool invincible = false;
-    public bool Alive => Player_Inventory.health > 0;
+    public bool Alive => Player_Inventory.Health > 0;
 
     private void Start()
     {
@@ -93,8 +93,8 @@ public class Player_Controller : MonoBehaviour
         if (invincible) return; // invulnability time
         invincible = true;
         Invoke(nameof(DisableInvincibility), 2f);
-        Player_Inventory.health--;
-        if (Player_Inventory.health < 1) { Die(); return; }
+        Player_Inventory.Health--;
+        if (Player_Inventory.Health < 1) { Die(); return; }
 
         var push = transform.position - hazard.transform.position;
         push = push.normalized * 300f;
@@ -104,7 +104,7 @@ public class Player_Controller : MonoBehaviour
 
     public void Die()
     {
-        Player_Inventory.health = 0;
+        Player_Inventory.Health = 0;
         GetComponent<CircleCollider2D>().enabled = false;
         rBody.velocity = Vector2.zero;
         rBody.AddForce(Vector2.up * 100f, ForceMode2D.Impulse);
