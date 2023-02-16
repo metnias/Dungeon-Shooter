@@ -47,7 +47,7 @@ public class Enemy_Animator : MonoBehaviour
     internal void HurtAnimation(bool die = false)
     {
         forcedAni = die ? aniDie : aniHurt;
-        Sound_Manager.Instance().PlaySE(die ? SEType.Killed : SEType.Damage);
+        Sound_Manager.Instance().PlaySE(SEType.Damage);
     }
 
     internal void StopHurtAnimation() => forcedAni = null;
